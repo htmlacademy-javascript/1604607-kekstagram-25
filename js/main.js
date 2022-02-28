@@ -53,11 +53,11 @@ const createObject = function () {
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomNumber(15, 200)
+    likes: getRandomNumber(15, 200),
+    comments: Array.from(getRandomNumber(3, 15), () => getRandomArrayElement(MESSAGES))
   };
 };
 
 const multipleObject = Array.from({ length: OBJECT_COUNT }, createObject);
-console.log(
-  multipleObject
-);
+
+multipleObject();
