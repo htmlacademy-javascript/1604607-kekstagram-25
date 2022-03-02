@@ -1,4 +1,5 @@
-import { getRandomNumber } from './util.js';
+import { getRandomNumber, getRandomArrayElement } from './util.js';
+
 
 let currentId = 0;
 const DESCRIPTIONS = [
@@ -26,8 +27,6 @@ const MESSAGES = [
 
 const OBJECT_COUNT = 25;
 
-const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
-
 const createObject = function () {
   currentId++;
   return {
@@ -44,4 +43,3 @@ const createObject = function () {
 
 const multipleObject = () => Array.from({ length: OBJECT_COUNT }, createObject);
 multipleObject();
-
