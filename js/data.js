@@ -42,5 +42,5 @@ const createObject = function () {
 };
 
 const multipleObject = () => Array.from({ length: OBJECT_COUNT }, createObject);
-multipleObject();
+
 export { multipleObject };
