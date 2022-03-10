@@ -32,7 +32,7 @@ const createObject = function () {
   return {
     id: currentId,
     avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
-    url: `photos/${currentId}.jpg`,
+    url: `/photos/${currentId}.jpg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(NAMES),
     description: getRandomArrayElement(DESCRIPTIONS),
@@ -43,3 +43,4 @@ const createObject = function () {
 
 const multipleObject = () => Array.from({ length: OBJECT_COUNT }, createObject);
 multipleObject();
+export { multipleObject };
