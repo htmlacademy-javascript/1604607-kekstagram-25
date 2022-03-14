@@ -1,17 +1,23 @@
+const bigPicture = document.querySelector('.big-picture'); // нашла элемент .big-picture
+const closeButton = bigPicture.querySelector('.big-picture__cancel'); // нашла класс, который закрывает модальное окно
+// const socialCommentCount = bigPicture.querySelector('.social__comment-count'); // нашла элемент .social__comment-count
+// socialCommentCount.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
+const commentsLoader = bigPicture.querySelector('.comments-loader');
+commentsLoader.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
+const fragment = document.createDocumentFragment(); //создала коробочку, куда потом все сложу
 
 const renderPopup = (photo) => {
-
-  const bigPicture = document.querySelector('.big-picture'); // нашла элемент .big-picture
-  const closeButton = bigPicture.querySelector('.big-picture__cancel'); // нашла класс, который закрывает модальное окно
-
+  bigPicture.classList.remove('hidden'); // убрала класс, чтобы отобразить модальное окно
+  document.body.classList.add('modal-open'); //блокирую скролл
   const closeWindow = function () {
     bigPicture.classList.add('hidden'); // добавила класс, чтобы окно закрывалось
-    document.body.classList.remove('modal-open'); // удалила класс modal-open, чтобы при закрытии попап сранится могла скроллиться
+    document.body.classList.remove('modal-open'); // удалила класс modal-open, чтобы при закрытии попап странится могла скроллиться
+    // bigPicture.classList.remove('hidden'); // удалила класс hidden у элемента .big-picture, чтобы отобразить блок
+    closeButton.removeEventListener('click', closeWindow);
   };
 
-  closeButton.addEventListener('click', () => {
-    closeWindow();
-  });
+  closeButton.addEventListener('click', closeWindow);
+
   document.addEventListener('keyup', (evt) => {
     if (evt.key === 'Escape') {
       closeWindow();
@@ -29,14 +35,6 @@ const renderPopup = (photo) => {
     description.textContent = photo.description; // описание фотографии вставила строкой в блок
   };
   setInfo();
-
-  bigPicture.classList.remove('hidden'); // удалила класс hidden у элемента .big-picture, чтобы отобразить блок
-  const socialCommentCount = bigPicture.querySelector('.social__comment-count'); // нашла элемент .social__comment-count
-  socialCommentCount.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
-  const commentsLoader = bigPicture.querySelector('.comments-loader'); // нашла элемент .comments-loader
-  commentsLoader.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
-  document.body.classList.add('modal-open'); // добавила кдасс modal-open чтобы контейнер с фотографиями позади не прокручивался при скролле.
-  const fragment = document.createDocumentFragment(); //создала коробочку, куда потом все сложу
 
   photo.comments.forEach((comment) => {
     const commentsListItem = document.createElement('li'); // создала эдемент

@@ -16,5 +16,5 @@ isSuitableStringLength('test', 5);
 
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-export { getRandomNumber, isSuitableStringLength, getRandomArrayElement };
+export { getRandomNumber, isSuitableStringLength, getRandomArrayElement, };
 

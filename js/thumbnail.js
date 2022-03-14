@@ -1,4 +1,6 @@
 import { multipleObject } from './data.js';
+import { renderPopup } from './render-thumbnails.js';
+
 const photos = multipleObject();
 
 const containerPhotos = document.querySelector('.pictures');
@@ -11,9 +13,12 @@ photos.forEach((photo) => {
   a.querySelector('.picture__img').src = photo.url;
   a.querySelector('.picture__comments').textContent = photo.comments.length;
   a.querySelector('.picture__likes').textContent = photo.likes;
-
+  a.addEventListener('click', () => {
+    renderPopup(photo);
+  });
   fragment.appendChild(a);
 });
+
 
 containerPhotos.appendChild(fragment);
 

@@ -1,7 +1,9 @@
 import { getRandomNumber, getRandomArrayElement } from './util.js';
 
-
 let currentId = 0;
+let commentId = 100;
+const OBJECT_COUNT = 25;
+
 const DESCRIPTIONS = [
   'музыка исцеляет мою душу',
   'люблю порядок во всем',
@@ -25,21 +27,27 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const OBJECT_COUNT = 25;
+
+const createComment = function () {
+  return {
+    id: ++commentId,
+    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES),
+  };
+};
 
 const createObject = function () {
   currentId++;
   return {
     id: currentId,
-    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
     url: `/photos/${currentId}.jpg`,
-    message: getRandomArrayElement(MESSAGES),
-    name: getRandomArrayElement(NAMES),
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomNumber(15, 200),
-    comments: Array.from(getRandomNumber(3, 15), () => getRandomArrayElement(MESSAGES))
+    comments: Array.from(getRandomNumber(3, 15), createComment),
   };
 };
+
 
 const multipleObject = () => Array.from({ length: OBJECT_COUNT }, createObject);
 
