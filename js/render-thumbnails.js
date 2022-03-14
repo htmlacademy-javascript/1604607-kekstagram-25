@@ -1,18 +1,17 @@
-const bigPicture = document.querySelector('.big-picture'); // нашла элемент .big-picture
-const closeButton = bigPicture.querySelector('.big-picture__cancel'); // нашла класс, который закрывает модальное окно
-// const socialCommentCount = bigPicture.querySelector('.social__comment-count'); // нашла элемент .social__comment-count
-// socialCommentCount.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-commentsLoader.classList.add('hidden'); // добавила элементу класс hidden, спрятать блоки счётчика комментариев
-const fragment = document.createDocumentFragment(); //создала коробочку, куда потом все сложу
+const bigPicture = document.querySelector('.big-picture');
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
+// const socialCommentCount = bigPicture.querySelector('.social__comment-count');
+// socialCommentCount.classList.add('hidden'); //
+// const commentsLoader = bigPicture.querySelector('.comments-loader');
+// commentsLoader.classList.add('hidden');
+const fragment = document.createDocumentFragment();
 
 const renderPopup = (photo) => {
-  bigPicture.classList.remove('hidden'); // убрала класс, чтобы отобразить модальное окно
-  document.body.classList.add('modal-open'); //блокирую скролл
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
   const closeWindow = function () {
-    bigPicture.classList.add('hidden'); // добавила класс, чтобы окно закрывалось
-    document.body.classList.remove('modal-open'); // удалила класс modal-open, чтобы при закрытии попап странится могла скроллиться
-    // bigPicture.classList.remove('hidden'); // удалила класс hidden у элемента .big-picture, чтобы отобразить блок
+    bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
     closeButton.removeEventListener('click', closeWindow);
   };
 
@@ -25,20 +24,20 @@ const renderPopup = (photo) => {
   });
 
   const setInfo = function () {
-    const img = bigPicture.querySelector('.big-picture__img img'); // нашла элемент .big-picture__img img
-    img.src = photo.url; // подставила url
-    const likes = bigPicture.querySelector('.likes-count'); // нашла элемент .likes-count
-    likes.textContent = photo.likes; // количество лайков подставила, как текстовое содержимое
+    const img = bigPicture.querySelector('.big-picture__img img');
+    img.src = photo.url;
+    const likes = bigPicture.querySelector('.likes-count');
+    likes.textContent = photo.likes;
     const comments = bigPicture.querySelector('.comments-count');
-    comments.textContent = photo.comments.length; // количество комментариев (длину) подставила, как текстовое содержимое элемента
+    comments.textContent = photo.comments.length;
     const description = bigPicture.querySelector('.social__caption');
-    description.textContent = photo.description; // описание фотографии вставила строкой в блок
+    description.textContent = photo.description;
   };
   setInfo();
 
   photo.comments.forEach((comment) => {
-    const commentsListItem = document.createElement('li'); // создала эдемент
-    commentsListItem.classList.add('social__comment'); // добавила класс элементу
+    const commentsListItem = document.createElement('li');
+    commentsListItem.classList.add('social__comment');
     const img = document.createElement('img');
     img.classList.add('social__picture');
     img.src = comment.avatar;
