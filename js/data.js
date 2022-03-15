@@ -41,7 +41,7 @@ const createObject = function () {
   currentId++;
   return {
     id: currentId,
-    url: `/photos/${currentId}.jpg`,
+    url: `photos/${currentId}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomNumber(15, 200),
     comments: Array.from(getRandomNumber(3, 15), createComment),
