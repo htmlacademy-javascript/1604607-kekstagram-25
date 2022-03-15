@@ -1,9 +1,5 @@
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-// const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-// socialCommentCount.classList.add('hidden'); //
-// const commentsLoader = bigPicture.querySelector('.comments-loader');
-// commentsLoader.classList.add('hidden');
 const fragment = document.createDocumentFragment();
 
 const renderPopup = (photo) => {
