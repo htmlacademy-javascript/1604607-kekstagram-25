@@ -14,7 +14,11 @@ function isSuitableStringLength(line, maxLine) {
 }
 isSuitableStringLength('test', 5);
 
+const isFocused = function (field) {
+  return field === document.activeElement;
+};
+
 const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
 
-export { getRandomNumber, isSuitableStringLength, getRandomArrayElement, };
+export { getRandomNumber, isSuitableStringLength, getRandomArrayElement, isFocused };
 
