@@ -14,7 +14,7 @@ function isSuitableStringLength(line, maxLine) {
 }
 isSuitableStringLength('test', 5);
 
-const isFocused = function (field) {
+const isFocused = function (field) { // TODO доработать функцию, чтобы принимало много элементов для проверки в массиве.
   return field === document.activeElement;
 };
 

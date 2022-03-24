@@ -1,3 +1,4 @@
+
 const validateHashTag = function (inputString) {
   const errors = [];
   let hashTagDuplicates = [];
@@ -5,9 +6,9 @@ const validateHashTag = function (inputString) {
   if (arrayHashTag.length > 5) {
     errors.push('нельзя указать больше пяти хэш-тегов;');
   }
-
-  hashTagDuplicates = arrayHashTag.filter((item, index) => {
-    if (index !== arrayHashTag.indexOf(item)) {
+  const arrayHashTagLowerCased = arrayHashTag.map((el) => el.toLowerCase());
+  hashTagDuplicates = arrayHashTagLowerCased.filter((item, index) => {
+    if (index !== arrayHashTagLowerCased.indexOf(item)) {
       return item;
     }
   });
@@ -16,14 +17,11 @@ const validateHashTag = function (inputString) {
   }
 
   arrayHashTag.forEach((hash, index) => {
-
     if (hash[0] !== '#') {
-
       errors.push('хэш-тег начинается с символа #');
     }
     if (!hash.match(/(#[a-z0-9][a-z0-9\-_]*)/ig)) {
       errors.push('строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;');
-
     }
     if (hash === '#') {
       errors.push('хеш-тег не может состоять только из одной решётки;');
@@ -32,11 +30,9 @@ const validateHashTag = function (inputString) {
       errors.push(`длина хештега ${hash} не должна быть больше 20`);
     }
     arrayHashTag[index] = hash.toLowerCase();
-
   });
 
   return errors;
-
 };
 
 export { validateHashTag };
