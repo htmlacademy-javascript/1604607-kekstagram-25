@@ -5,7 +5,7 @@ const uploadFile = document.querySelector('#upload-file');
 const imgOverlay = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 const commentField = document.querySelector('.text__description');
-const hashTag = document.querySelector('.img-upload__text .text');
+const hashTag = document.querySelector('.text__hashtags');
 const uploadForm = document.querySelector('.img-upload__form');
 
 uploadFile.addEventListener('change', () => {
@@ -21,7 +21,7 @@ uploadFile.addEventListener('change', () => {
   });
 
   document.addEventListener('keyup', (evt) => { // закрыла форму клавишей esc
-    if (evt.key === 'Escape' && !isFocused(commentField)) {
+    if (evt.key === 'Escape' && !isFocused(commentField) && !isFocused(hashTag)) {
       imgOverlay.classList.add('hidden');
     }
   });
