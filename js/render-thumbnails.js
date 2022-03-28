@@ -1,7 +1,29 @@
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const fragment = document.createDocumentFragment();
+let socialCommentCount = document.querySelector('.social__comment-count');
+const commentsLoader = document.querySelector('.comments-loader');
+const socialCommentButton = document.querySelector('.social__comments-loader');
 
+const createCommentElement = function (comment) {
+  // console.log(comment);
+  socialCommentCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+  const commentsListItem = document.createElement('li'); //создать элемент 'li' с классом social__comment
+  commentsListItem.classList.add('social__comment'); //создать элемент 'li' с классом social__comment
+  const img = document.createElement('img');
+  img.classList.add('social__picture');
+  img.src = comment.avatar;
+  img.alt = comment.name;
+  img.width = 35;
+  img.height = 35;
+  const p = document.createElement('p');
+  p.classList.add('social__text');
+  p.textContent = comment.message;
+  commentsListItem.appendChild(img);
+  commentsListItem.appendChild(p);
+  return commentsListItem;
+};
 
 const renderPopup = (photo) => {
   bigPicture.classList.remove('hidden');
@@ -35,6 +57,17 @@ const renderPopup = (photo) => {
 
   const socialComments = bigPicture.querySelector('.social__comments');
   socialComments.innerHTML = '';
-  socialComments.appendChild(fragment);
+
+  socialCommentButton.addEventListener('click', () => {
+    socialCommentCount++; //увеличивать значение переменной , которая отвечает за лимит комментариев.
+    // console.log(photo);
+    for (let i = 0; i < 5; i++) {
+      fragment.appendChild(createCommentElement(photo.comments[i]));
+    }
+    socialComments.appendChild(fragment);
+    createCommentElement(socialCommentCount++);// вызвать функцию, которая будет отрисовывать комментарии в цикле,
+    //по количеству ссылаясь на переменную
+  });
 };
+
 export { renderPopup };
