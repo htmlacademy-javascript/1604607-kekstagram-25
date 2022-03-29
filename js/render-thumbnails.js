@@ -1,12 +1,13 @@
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const fragment = document.createDocumentFragment();
-let socialCommentCount = document.querySelector('.social__comment-count');
+const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const socialCommentButton = document.querySelector('.social__comments-loader');
+const socialComments = bigPicture.querySelector('.social__comments');
+const currentNumber = bigPicture.querySelector('.comment-current');
 
-const createCommentElement = function (comment) {
-  // console.log(comment);
+
+const createCommentElement = function (comment) { // создала комментарий со всем его содержимым - аватар, текст, имя. И все это "экспортировала"
   socialCommentCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
   const commentsListItem = document.createElement('li'); //создать элемент 'li' с классом social__comment
@@ -25,9 +26,21 @@ const createCommentElement = function (comment) {
   return commentsListItem;
 };
 
-const renderPopup = (photo) => {
+const renderComments = function (commentsArray, limiter) { // проверяю длину массива комментария и ограничителя.
+  socialComments.innerHTML = '';
+  for (let i = 0; i < limiter; i++) {
+    if (commentsArray[i]) {
+      socialComments.appendChild(createCommentElement(commentsArray[i]));
+    }
+  }
+};
+
+
+const renderPopup = (photoObject) => {
+  let maxVisibleComments = 5;
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
+
   const closeWindow = function () {
     bigPicture.classList.add('hidden');
     document.body.classList.remove('modal-open');
@@ -42,32 +55,37 @@ const renderPopup = (photo) => {
     }
   });
 
+
+  const setLoadMoreButtonVisibility = function () { // проверяю, что указанные в комментариях числа соответсовали, от этого зависит нужно ли скрывать кнопку, или нет
+    if (maxVisibleComments > photoObject.comments.length) {
+      socialCommentButton.classList.add('hidden');
+    }
+
+  };
+
+
   const setInfo = function () {
     const img = bigPicture.querySelector('.big-picture__img img');
-    img.src = photo.url;
+    img.src = photoObject.url;
     const likes = bigPicture.querySelector('.likes-count');
-    likes.textContent = photo.likes;
+    likes.textContent = photoObject.likes;
     const comments = bigPicture.querySelector('.comments-count');
-    comments.textContent = photo.comments.length;
+    comments.textContent = photoObject.comments.length;
     const description = bigPicture.querySelector('.social__caption');
-    description.textContent = photo.description;
+    description.textContent = photoObject.description;
   };
   setInfo();
 
-
-  const socialComments = bigPicture.querySelector('.social__comments');
-  socialComments.innerHTML = '';
-
+  renderComments(photoObject.comments, maxVisibleComments); // вызов функции
+  setLoadMoreButtonVisibility(); //тоже вызов
+  currentNumber.textContent = socialComments.childElementCount;
   socialCommentButton.addEventListener('click', () => {
-    socialCommentCount++; //увеличивать значение переменной , которая отвечает за лимит комментариев.
-    // console.log(photo);
-    for (let i = 0; i < 5; i++) {
-      fragment.appendChild(createCommentElement(photo.comments[i]));
-    }
-    socialComments.appendChild(fragment);
-    createCommentElement(socialCommentCount++);// вызвать функцию, которая будет отрисовывать комментарии в цикле,
-    //по количеству ссылаясь на переменную
+    maxVisibleComments += 5;
+    renderComments(photoObject.comments, maxVisibleComments);
+    setLoadMoreButtonVisibility();
+    currentNumber.textContent = socialComments.childElementCount;
   });
 };
 
 export { renderPopup };
+
