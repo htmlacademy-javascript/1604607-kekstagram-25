@@ -28,7 +28,7 @@ const MESSAGES = [
 ];
 
 
-const createComment = function () {
+const createComment = function () { //функция, которая создает объект комментария.
   return {
     id: ++commentId,
     avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
@@ -44,7 +44,7 @@ const createObject = function () {
     url: `photos/${currentId}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomNumber(15, 200),
-    comments: Array.from(getRandomNumber(3, 15), createComment),
+    comments: Array.from({ length: getRandomNumber(3, 15) }, createComment),
   };
 };
 
