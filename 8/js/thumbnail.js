@@ -2,7 +2,6 @@ import { multipleObject } from './data.js';
 import { renderPopup } from './render-thumbnails.js';
 
 const photos = multipleObject();
-// console.log(photos);
 const containerPhotos = document.querySelector('.pictures');
 const templateWrapper = document.querySelector('#picture').content;
 const template = templateWrapper.querySelector('a');
