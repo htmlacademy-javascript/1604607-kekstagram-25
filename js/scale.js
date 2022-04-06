@@ -1,6 +1,6 @@
+import filterConfiguration from './filter-configuration.js';
+
 const scaleControlValue = document.querySelector('.scale__control--value');
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const imgPreview = document.querySelector('.img-upload__preview');
 const filterOriginal = document.querySelector('.effects__preview--none');
 const filterChrome = document.querySelector('.effects__preview--chrome');
@@ -9,8 +9,9 @@ const filterMarvin = document.querySelector('.effects__preview--marvin');
 const filterPhobos = document.querySelector('.effects__preview--phobos');
 const filterHeat = document.querySelector('.effects__preview--heat');
 const sliderValue = document.querySelector('.effect-level__slider');
-let currentFilter = 'none';
-let currentScaleValue = 100;
+let currentFilter = '';
+
+
 const FilterNames = {
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -24,7 +25,7 @@ noUiSlider.create(sliderValue, {
     min: 0,
     max: 100,
   },
-  start: 80,
+  start: 20,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -42,7 +43,7 @@ noUiSlider.create(sliderValue, {
 sliderValue.noUiSlider.on('update', (_, handle, unencoded) => {
   const value = unencoded[handle];
   if (currentFilter === FilterNames.CHROME) {
-    imgPreview.style.filter = `grayscale(${value / 100})`;
+    imgPreview.style.filter = `grayscale(${value})`;
   }
   if (currentFilter === FilterNames.SEPIA) {
     imgPreview.style.filter = `sepia(${value})`;
@@ -58,24 +59,10 @@ sliderValue.noUiSlider.on('update', (_, handle, unencoded) => {
   }
 });
 
-scaleControlSmaller.addEventListener('click', () => { // Значение должно изменяться с шагом в 25.
-  if (currentScaleValue === 25) {
-    return;
-  }
-  currentScaleValue -= 25;
-  scaleControlValue.value = `${currentScaleValue}%`;
-  imgPreview.style.transform = `scale(${currentScaleValue / 100})`; // если в поле стоит значение 75%, то в стиле изображения должно быть написано transform: scale(0.75)
-});
-
-scaleControlBigger.addEventListener('click', () => {
-  if (currentScaleValue === 100) {
-    return;
-  }
-  currentScaleValue += 25;
-  scaleControlValue.value = `${currentScaleValue}%`;
-  imgPreview.style.transform = `scale(${currentScaleValue / 100})`;
-}
-);
+const changeImageScale = function (scaleValue) {
+  scaleControlValue.value = `${scaleValue}%`;
+  imgPreview.style.transform = `scale(${scaleValue / 100})`;
+};
 
 filterOriginal.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
@@ -86,28 +73,35 @@ filterChrome.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--chrome');
   currentFilter = FilterNames.CHROME;
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.chrome);
 });
 
 filterSepia.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--sepia');
   currentFilter = FilterNames.SEPIA;
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.sepia); //почему-то фильтр не меняется
 });
 
 filterMarvin.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--marvin');
   currentFilter = FilterNames.MARVIN;
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.marvin);
 });
 
 filterPhobos.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--fobos');
   currentFilter = FilterNames.PHOBOS;
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.phobos);
 });
 
 filterHeat.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--heat');
   currentFilter = FilterNames.HEAT;
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.heat);
 });
+
+export { changeImageScale };
