@@ -5,3 +5,4 @@ import './render-thumbnails.js';
 import './form.js';
 import './validation.js';
 import './scale.js';
+import './filter-configuration.js';
