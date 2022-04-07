@@ -4,5 +4,5 @@ import './thumbnail.js';
 import './render-thumbnails.js';
 import './form.js';
 import './validation.js';
-import './scale.js';
+import './edit-image.js';
 import './filter-configuration.js';
