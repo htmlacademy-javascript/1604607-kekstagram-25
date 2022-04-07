@@ -9,6 +9,7 @@ const filterMarvin = document.querySelector('.effects__preview--marvin');
 const filterPhobos = document.querySelector('.effects__preview--phobos');
 const filterHeat = document.querySelector('.effects__preview--heat');
 const sliderValue = document.querySelector('.effect-level__slider');
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 let currentFilter = '';
 
 
@@ -25,7 +26,7 @@ noUiSlider.create(sliderValue, {
     min: 0,
     max: 100,
   },
-  start: 20,
+  start: 50,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -38,6 +39,9 @@ noUiSlider.create(sliderValue, {
       return parseFloat(value);
     },
   },
+  // filterOriginal.addEventListener('click', () => {
+  //   sliderValue.classList.add('hidden');
+  // }),
 });
 
 sliderValue.noUiSlider.on('update', (_, handle, unencoded) => {
@@ -65,14 +69,17 @@ const changeImageScale = function (scaleValue) {
 };
 
 filterOriginal.addEventListener('click', () => {
+  imgPreview.style.filter = '';
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--none');
+  imgUploadEffectLevel.classList.add('hidden');
 });
 
 filterChrome.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--chrome');
   currentFilter = FilterNames.CHROME;
+  imgUploadEffectLevel.classList.remove('hidden');
   sliderValue.noUiSlider.updateOptions(filterConfiguration.chrome);
 });
 
@@ -80,13 +87,15 @@ filterSepia.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--sepia');
   currentFilter = FilterNames.SEPIA;
-  sliderValue.noUiSlider.updateOptions(filterConfiguration.sepia); //почему-то фильтр не меняется
+  imgUploadEffectLevel.classList.remove('hidden');
+  sliderValue.noUiSlider.updateOptions(filterConfiguration.sepia);
 });
 
 filterMarvin.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--marvin');
   currentFilter = FilterNames.MARVIN;
+  imgUploadEffectLevel.classList.remove('hidden');
   sliderValue.noUiSlider.updateOptions(filterConfiguration.marvin);
 });
 
@@ -94,6 +103,7 @@ filterPhobos.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--fobos');
   currentFilter = FilterNames.PHOBOS;
+  imgUploadEffectLevel.classList.remove('hidden');
   sliderValue.noUiSlider.updateOptions(filterConfiguration.phobos);
 });
 
@@ -101,6 +111,7 @@ filterHeat.addEventListener('click', () => {
   imgPreview.className = 'img-upload__preview';
   imgPreview.classList.add('effects__preview--heat');
   currentFilter = FilterNames.HEAT;
+  imgUploadEffectLevel.classList.remove('hidden');
   sliderValue.noUiSlider.updateOptions(filterConfiguration.heat);
 });
 
