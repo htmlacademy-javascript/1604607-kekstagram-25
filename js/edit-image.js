@@ -39,9 +39,6 @@ noUiSlider.create(sliderValue, {
       return parseFloat(value);
     },
   },
-  // filterOriginal.addEventListener('click', () => {
-  //   sliderValue.classList.add('hidden');
-  // }),
 });
 
 sliderValue.noUiSlider.on('update', (_, handle, unencoded) => {
