@@ -1,6 +1,6 @@
 // import { getRandomNumber, getRandomArrayElement } from './util.js';
 
-import { loadImages } from './load.js';
+// import { loadImages } from './load.js';
 
 // let currentId = 0;
 // let commentId = 100;
@@ -54,10 +54,3 @@ import { loadImages } from './load.js';
 // const multipleObject = () => Array.from({ length: OBJECT_COUNT }, createObject);
 
 // export { multipleObject };
-
-let photos = [];
-const loadData = async () => await loadImages().then((response) => { photos = response; });
-loadData();
-console.log(photos);
-
-export { photos };
