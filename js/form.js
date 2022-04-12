@@ -1,6 +1,9 @@
 import { validateHashTag } from './validation.js';
 import { isFocused } from './util.js';
 import { changeImageScale } from './edit-image.js';
+import { postPhoto } from './post-photo.js';
+import { showSuccessMessage } from './show-message.js';
+import { showErrorMessage } from './show-message.js';
 const imgPreview = document.querySelector('.img-upload__preview');
 const uploadFile = document.querySelector('#upload-file');
 const imgOverlay = document.querySelector('.img-upload__overlay');
@@ -11,12 +14,17 @@ const uploadForm = document.querySelector('.img-upload__form');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-// const uploadSubmit = document.querySelector('.img-upload__submit');
+const submitButton = document.querySelector('.img-upload__submit');
 // const downloadErros = document.querySelector('#error');
-// const downloadSuccess = document.querySelector('#success');
 const IMAGE_SCALE_STEP = 25;
 const MIN_IMAGE_SCALE = 25;
 const MAX_IMAGE_SCALE = 100;
+const closeModalWindow = () => {
+  imgOverlay.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  imgPreview.style = '';
+  imgPreview.className = 'img-upload__preview';
+};
 
 uploadFile.addEventListener('change', () => {
   imgOverlay.classList.remove('hidden');  //открыла форму
@@ -32,14 +40,26 @@ uploadFile.addEventListener('change', () => {
     }
   });
 
+
   document.addEventListener('keyup', (evt) => { // закрыла форму клавишей esc
     if (evt.key === 'Escape' && !isFocused(commentField) && !isFocused(hashTag)) {
-      imgOverlay.classList.add('hidden');
+      closeModalWindow();
     }
   });
 
+  const setSubmitButtonDisabledState = (isDisabled) => {
+    submitButton.disabled = isDisabled;
+  };
+
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    setSubmitButtonDisabledState(true);
+    const formData = new FormData(evt.target);
+    postPhoto(
+      formData,
+      () => { uploadForm.reset(); closeModalWindow(); showSuccessMessage(); setSubmitButtonDisabledState(false); },
+      () => { uploadForm.reset(); showErrorMessage(); closeModalWindow(); setSubmitButtonDisabledState(); }
+    );
   });
 
   scaleControlSmaller.addEventListener('click', () => {
@@ -56,40 +76,11 @@ uploadFile.addEventListener('change', () => {
   });
 });
 
-
 uploadCancel.addEventListener('click', () => {
-  imgOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  imgPreview.style = '';
-  imgPreview.className = 'img-upload__preview';
+  closeModalWindow();
 });
 
-// uploadSubmit.addEventListener('submit', () => {
-//   // все данные из формы(imgOverlay), включая изображения,
-//   // с помощью AJAX-запроса отправляются на сервер
-//   // https://25.javascript.pages.academy/kekstagram методом POST с типом multipart/form-data.
-//   // На время выполнения запроса к серверу кнопка «Отправить» блокируется.
-//   // const createLoader = (onSuccess, onError) => fetch(
-//   //   'https://25.javascript.pages.academy/kekstagram',
-//   //   {
-//   //     method: 'POST',
-//   //     type: 'multipart/form-data',
-//   //     credentials: 'same-origin',
-//   //   },
-//   // )
-//   //   .then((response) => {
-//   //     if (response.ok) {
-//   //       return response.json();
-//   //     }
-//   //     throw new Error(`${response.status} ${response.statusText}`);
-//   //   })
-//   //   .then((data) => {
-//   //     onSuccess(data);
-//   //   })
-//   //   .catch((err) => {
-//   //     onError(err);
-//   //   });
-// });
+
 // // imgOverlay.addEventListener('submit', () => {
 // //   // if (uploadForm отправилась) {
 // //     document.addEventListener('keyup', (evt) => { // закрыла форму клавишей esc
